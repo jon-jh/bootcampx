@@ -20,9 +20,10 @@ pool.connect()
     console.log('Not connected', err.stack);
   });
 
-// QUERIES
+// QUERIES (converted to parameterized query)
 
-
+const cohortsName = process.argv[2] || 'JUL02';
+const limit = process.argv[3] || 5;
 
 pool.query(`
   select students.id as student_id,
@@ -30,9 +31,9 @@ pool.query(`
   cohorts.name as cohort
   from students
   join cohorts on cohorts.id = cohort_id
-  where cohorts.name like '%${process.argv[2]}%'
-  limit ${process.argv[3] || 5};
-  `)
+  where cohorts.name like $1
+  limit $2;
+  `, [cohortsName, limit])
   
   .then((res) => {
     res.rows.forEach((user) => {
