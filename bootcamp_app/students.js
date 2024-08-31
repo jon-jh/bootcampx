@@ -17,10 +17,12 @@ pool.connect()
     client.release();
   })
   .catch(err => {
-    console.log('Not connected', err.stack)
+    console.log('Not connected', err.stack);
   });
 
 // QUERIES
+
+
 
 pool.query(`
   select students.id as student_id,
@@ -36,7 +38,7 @@ pool.query(`
     res.rows.forEach((user) => {
       console.log(`${user.name} [ID${user.student_id}] was in the ${user.cohort} cohort.`
       );
-    })
+    });
 
   })
   .catch((err) => console.error('error!', err.stack));
